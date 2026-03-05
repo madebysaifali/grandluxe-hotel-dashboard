@@ -21,6 +21,14 @@ technical assignment.
 - ⚠️ Full error handling, empty states, and loading indicators
 - 📱 Responsive design
 
+## ✅ Implemented Mandatory Features
+Assignment ki mandatory requirements ke mutabiq ye features complete hain:
+* **Mock Authentication**: Login flow with protected route logic.
+* **Room Listing**: Detailed display of rooms with pricing and metadata.
+* **Date Selection & Validation**: Logic for choosing stay dates and checking availability.
+* **Booking Confirmation**: Real-time UI feedback for successful bookings.
+* **My Bookings Page**: Dedicated history section to view all confirmed reservations.
+
 ## Tech Stack
 
 - React.js (Create React App)
