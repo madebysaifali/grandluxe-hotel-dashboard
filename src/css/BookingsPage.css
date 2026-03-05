@@ -1,0 +1,58 @@
+/* --- Mobile First --- */
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column; /* Stack image and text */
+  gap: 16px;
+}
+
+.booking-icon-container {
+  width: 100%;
+  height: 180px; /* Mobile par badi image */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.booking-room-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.booking-price-col {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Desktop --- */
+@media (min-width: 768px) {
+  .booking-card {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    flex-direction: row;
+    padding: 24px;
+  }
+  .booking-icon-container {
+    width: 80px;
+    height: 80px;
+  }
+  .booking-price-col {
+    flex-direction: column;
+    border-top: none;
+    padding-top: 0;
+    justify-content: center;
+    text-align: right;
+  }
+}

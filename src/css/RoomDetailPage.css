@@ -1,0 +1,156 @@
+/* RoomDetailPage.css */
+
+.page-wrap {
+    padding: 20px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 48px;
+    align-items: start;
+}
+
+/* Room Hero Image Section */
+.hero {
+    height: 320px;
+    background: var(--warm);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Room Info Labels & Text */
+.room-type {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.room-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    margin-bottom: 24px;
+}
+
+/* Info Grid (Price & Capacity) */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.info-item {
+    background: var(--warm);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+.info-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+}
+
+/* Amenities Section */
+.amen-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+.amenities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.amen-tag {
+    font-size: 13px;
+    padding: 6px 12px;
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+}
+
+/* Right Booking Panel */
+.booking-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    position: sticky;
+    top: 80px;
+}
+
+.panel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 24px;
+}
+
+.price-box {
+    text-align: center;
+    padding: 20px;
+    background: var(--warm);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+}
+
+.big-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+}
+
+/* Summary Row */
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+    margin-bottom: 16px;
+}
+
+.total-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Responsive fix */
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+    .booking-panel {
+        position: static;
+    }
+}

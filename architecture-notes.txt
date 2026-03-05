@@ -1,0 +1,88 @@
+ARCHITECTURE NOTES – Room Booking Dashboard
+==========================================
+
+1. STATE MANAGEMENT APPROACH
+------------------------------
+I used Context API + useReducer instead of useState or Redux.
+
+Why:
+- The app has shared state across multiple pages (user, bookings, current page, notifications).
+- useReducer keeps all state transitions in one place (AppContext.js), making it easy to trace what changed and why.
+- Context API avoids prop drilling across 4 pages without adding a third-party library.
+- Redux would be overkill for this scale. useState alone would scatter state across components.
+
+The reducer handles: LOGIN, LOGOUT, SET_PAGE, SELECT_ROOM, ADD_BOOKING, SET_NOTIFICATION, CLEAR_NOTIFICATION.
+
+
+2. WHAT HAPPENS IF THE API FAILS?
+-----------------------------------
+All mock API calls (loginAPI, checkAvailabilityAPI, confirmBookingAPI) are wrapped in try/catch blocks.
+
+- Login failure: Shows an inline error message below the form.
+- Availability check failure: Dispatches a SET_NOTIFICATION action that shows a toast/notification to the user.
+- Booking confirmation failure: Same notification approach. The UI does not navigate away; user can retry.
+
+In a real app, I would also add:
+- Retry logic with exponential backoff
+- A global error boundary (React ErrorBoundary) to catch render-level crashes
+- Offline detection using navigator.onLine
+
+
+3. HOW ARE LOADING STATES HANDLED?
+------------------------------------
+Every async action has a local loading state:
+- Login button shows spinner + "Verifying..." while API is in progress.
+- "Check Availability" button shows spinner while checking.
+- "Confirm Booking" button shows spinner while confirming.
+
+All buttons are disabled during loading to prevent duplicate submissions.
+The spinner component is reusable and shared across Button.js.
+
+
+4. HOW WOULD YOU SCALE THIS UI FOR 1000+ ROOMS?
+-------------------------------------------------
+Current approach loads all 6 mock rooms at once. For 1000+ rooms:
+
+a) Pagination or Infinite Scroll
+   - Fetch rooms in pages (e.g., 20 at a time) using query params: /rooms?page=1&limit=20
+   - Or use IntersectionObserver for infinite scroll
+
+b) Server-side Search & Filter
+   - Move search/filter logic to the backend query
+   - Avoid sending 1000 rooms to the frontend
+
+c) Virtualization
+   - Use react-window or react-virtual to render only visible room cards in the DOM
+   - Dramatically reduces DOM nodes and memory usage
+
+d) Memoization
+   - useMemo already used for filtered rooms list and bookedRoomIds Set
+   - React.memo used on RoomCard, Navbar, Notification to avoid re-renders
+
+e) Image Optimization
+   - Lazy-load room images using loading="lazy"
+   - Use WebP format with fallback
+
+
+5. COMPONENT DESIGN
+--------------------
+Reusable components created:
+- Button    – handles variant (primary/gold/outline/ghost), loading state, disabled state
+- Input     – label + input + error message in one unit
+- RoomCard  – pure display component, memoized with React.memo
+- Navbar    – sticky navigation, shows booking count badge
+- Notification – auto-dismissing toast (setTimeout in useEffect)
+
+Pages are kept thin: they only handle local form state and call API services.
+Business logic (state transitions) lives in the reducer in AppContext.js.
+API logic (delays, mock responses) lives in services/api.js.
+
+
+6. PERFORMANCE DECISIONS
+--------------------------
+- React.memo on Navbar, RoomCard, Notification prevents re-render when unrelated state changes
+- useMemo for filtered rooms list (recalculates only when filter/search/rooms change)
+- useMemo for bookedRoomIds Set (avoids recreating Set on every render)
+- useCallback for event handlers passed as props (avoids child re-renders)
+- Keys in lists use stable room.id and booking.id (not array index)
+- No redundant API calls: availability is only checked on button click, not on every date change
